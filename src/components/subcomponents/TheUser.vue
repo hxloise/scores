@@ -1,8 +1,23 @@
 <script setup>
+import { setLeader, isLeader } from "../../utils.js"
+import { ref, onMounted, onUpdated } from 'vue';
 
 const props = defineProps({
+    _id: String,
     name: String,
     scores: Array,
+});
+
+const leader = ref(false)
+
+onMounted(() => {
+    setLeader()
+    leader.value = isLeader(props._id)
+});
+
+onUpdated(() => {
+    setLeader()
+    leader.value = isLeader(props._id)
 });
 
 //get the total result of score
@@ -13,20 +28,21 @@ function getResult() {
 </script>
 
 <template>
-    <div id="user-card" class="column">
-        <h2>{{ name }}</h2>
+    <div id="user-card" class="row">
         <div class="row">
-            <div v-for="(score, i) in scores" :class="`result`">
+            <p class="user-score">{{ name }}</p>
+            <p v-for="(score, i) in scores" class="user-score" :class="`result`">
                 {{ score }}
-            </div>
-            <div>
-                <p> {{ getResult() }} </p>
-            </div>
+            </p>
+        </div>
+        <div>
+            <p class="total-score" :class="{ leaderP: leader }">{{ getResult() }}</p>
+
         </div>
     </div>
-    <div class="separator">
-        <hr>
-        <hr class="secondary-hr">
+    <div :class="`separator user-${props._id}`">
+        <hr :class="{ leader: leader }">
+        <hr class="secondary-hr" :class="{ leader: leader }">
     </div>
 </template>
 
@@ -36,4 +52,24 @@ function getResult() {
     color: var(--vt-c-gray);
 }
 
+#user-card {
+    justify-content: space-between;
+}
+
+.user-score {
+    margin-right: 1rem;
+}
+
+.total-score {
+    font-size: 2rem;
+    color: var(--vt-c-gray);
+}
+
+.leaderP {
+    color: var(--vt-c-violet);
+}
+
+.leader {
+    border: .2rem solid var(--vt-c-violet);
+}
 </style>

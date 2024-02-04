@@ -26,6 +26,8 @@ a {
 .row {
   display: flex;
   flex-direction: row;
+
+  align-items: center;
 }
 
 .hidden {
@@ -45,7 +47,7 @@ a {
 }
 
 .secondary-button{
-  width: 10%;
+  width: 15%;
   background-color: var(--vt-c-white-soft);
 
   border: .2rem solid var(--vt-c-white);
@@ -86,4 +88,8 @@ hr {
 .center{
   display: flex;
   justify-content: center;
+}
+
+.fixed-bottom{
+  width: calc(100vw - 2rem);
 }

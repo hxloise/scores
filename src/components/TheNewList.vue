@@ -41,8 +41,15 @@ const removeSelectedUsers = () => {
   for (let i = selectedIndexes.length - 1; i >= 0; i--) {
     users.value.splice(selectedIndexes[i], 1);
   }
+
+  // Auto relaod _id and empty tab
+  users.value.forEach((user, index) => {
+    user._id = index.toString();
+  });
+
   selectedUsers.value = [];
 };
+
 
 /*
   Main event for modal
@@ -62,7 +69,7 @@ const closeModal = () => {
 <template>
   <div id="display-content" class="hidden"></div>
   <div class="main-padding">
-    <the-button class="section" :type="'Secondary'" :content="'Retour'" :icone="false" :url="'/#'" />
+    <the-button class="section" :type="'Secondary'" :content="'Retour'" :icone="true" :url="'/#'" />
     <!-- Main content section -->
     <div class="section">
       <h1>Ajouter</h1>
@@ -81,7 +88,7 @@ const closeModal = () => {
       <p class="small-text">Sélectionner les personnes que vous souhaitez enlever de la liste.</p>
     </div>
     <div id="delete-user">
-      <div class="delete-user" v-for="(user, i) in users" :key="i" @click="() => toggleUserSelection(i)" :style="{
+      <div class="delete-user section" v-for="(user, i) in users" :key="i" @click="() => toggleUserSelection(i)" :style="{
         backgroundColor: user.selected ? '#2E2F33' : '#F6F2ED',
         color: user.selected ? '#FFFFFF' : '#000000'
       }">
@@ -89,7 +96,7 @@ const closeModal = () => {
       </div>
     </div>
     <!-- Buttons end section -->
-    <div>
+    <div class="fixed-bottom section">
       <button class="button" @click="removeSelectedUsers">Supprimer</button>
       <the-button :content="'Terminer'" :icone="false" :url="'/#'" />
       <div class="center small-text">
@@ -119,13 +126,20 @@ const closeModal = () => {
 
 input {
   border: none;
-  border-radius: 2rem;
+  border-radius: 2rem 0 0 2rem;
   width: 100%;
   height: 8vh;
+
+  padding: 2rem;
+}
+
+input:focus {
+  outline: none;
 }
 
 .adding {
   width: max-content;
+  border-radius: 0 2rem 2rem 0;
   padding: 0 2rem 0 2rem;
   color: var(--vt-c-white-soft);
   background-color: var(--vt-c-black);

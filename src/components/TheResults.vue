@@ -10,7 +10,7 @@ import users from '../content/users.json'
     <div id="results-content" class="main-padding">
         <h1>Résultats</h1>
         <div v-for="(user, i) in users" :key="i" :id="`user0${i + 1}`">
-            <the-user :name="user.name" :scores="user.score"/>
+            <the-user :_id="user._id" :name="user.name" :scores="user.score"/>
         </div>
     </div>
     <the-button class="main-padding" :content="'Modifier la liste'" :icone="false" :url="'/#/new'"/>

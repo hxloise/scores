@@ -8,7 +8,7 @@ import { ref, computed } from 'vue'
 const routes = {
     '/': Results,
     '/slider': Slider,
-    '/new' : NewList, 
+    '/new': NewList,
 }
 
 const currentPath = ref(window.location.hash)
@@ -18,7 +18,7 @@ let showNav = ref(true)
 
 window.addEventListener('hashchange', () => {
     currentPath.value = window.location.hash
-    showNav = currentPath.value === '#/new' ? false : true 
+    showNav = currentPath.value === '#/new' ? false : true
 })
 
 const currentView = computed(() => {
@@ -28,17 +28,17 @@ const currentView = computed(() => {
 </script>
 
 <template>
-  <header>
-    <!-- PWA Manifest -->
-  </header>
-  <main>
-        <div class="column">
-            <div class="end" v-if="showNav">
-                <a href="#/">Résultas</a>
-                <a href="#/slider">Slider</a>
+    <header>
+        <!-- PWA Manifest -->
+    </header>
+    <main>
+            <div class="column">
+                <div class="end" v-if="showNav">
+                    <a href="#/">Résultats</a>
+                    <a href="#/slider">Slider</a>
+                </div>
+                <component :is="currentView" />
             </div>
-            <component :is="currentView" />
-        </div>
     </main>
 </template>
 
